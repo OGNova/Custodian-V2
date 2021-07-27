@@ -16,7 +16,7 @@ class Ban extends Command {
     const deleteDays = args[1];
     if (!deleteDays) return message.reply({ content: '\`|\`<:redTick:607067960430952459>\`|\` Please supply an amount of days to delete messages.' });
     if (deleteDays < 0 || deleteDays > 7) {
-      return message.respond('please enter a number between 0 and 7', 'redTick', false);
+      return message.reply({ content: '\`|\`<:redTick:607067960430952459>\`|\` Please enter a number between 0 and 7.' });
     }
 
     const user = message.mentions.users.first();
@@ -27,7 +27,7 @@ class Ban extends Command {
     parseUser(message, user);
 
     const modlog = message.guild.channels.cache.find(channel =>  channel.name === 'modlog');
-    if (!modlog) return message.reply({ content: '\`|\`<:redTick:607067960430952459>\`|\` Please create a channel called **modlog** and try again.' })
+    if (!modlog) return message.reply({ content: '\`|\`<:redTick:607067960430952459>\`|\` Please create a channel called **modlog** and try again.' });
     const caseNum = await caseNumber(this.client, modlog);
 
     const reason = args.splice(2, args.length).join(' ') || `Awaiting moderator input. Use **__reason ${caseNum} <reason>**.`;

@@ -18,8 +18,7 @@ class Note extends Command {
     switch (action) {
       case 'add': {
         await this.client.db.addNote(member.user.id, note);
-        message.respond('Note successfully added.', 'greenTick', false);
-        return;
+        return message.reply({ content: '\`|\`<:greenTick:607067961286459403>\`|\` Note successfully added.' });
       }
       case 'list': {
         await this.client.db.getNotes(member.user.id);
@@ -28,7 +27,7 @@ class Note extends Command {
       }
       case 'remove': {
         await this.client.db.removeNote(member.user.id, noteID);
-        return message.respond('Note successfully removed.', 'greenTick', false);
+        return message.reply({ content: '\`|\`<:greenTick:607067961286459403>\`|\` Note successfully removed.' });
       }
     }
   }
