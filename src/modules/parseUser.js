@@ -1,5 +1,5 @@
 exports.parseUser = (message, user) => {
-  const member = message.guild.member(user) || null;
+  const member = message.guild.members.cache.get(user.id) || null;
   if (user.id === message.author.id) {
     return message.channel.send('You cannot do that to yourself, why did you try?');
   } else if (member) {

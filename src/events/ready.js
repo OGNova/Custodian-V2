@@ -21,7 +21,7 @@ class Ready extends Event {
       .setFooter('Novuh')
       .setTimestamp();
 
-    await this.client.channels.cache.get('723437000686043146').send({ embed });
+    await this.client.channels.cache.get('580612780483280906').send({ embeds: [ embed ] });
 
     this.client.logger.login(`Logged in as ${this.client.user.username}`);
     this.client.user.setActivity(`__help | ${this.client.guilds.cache.size} Servers`);
