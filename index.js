@@ -6,7 +6,7 @@ const myIntents = ['GUILDS', 'GUILD_MESSAGES', 'DIRECT_MESSAGES'];
 
 const client = new BaseClient({
   partials: ['MESSAGE', 'CHANNEL'],
-  ws: { intents: myIntents }
+  intents: myIntents
 });
 createLogger(client);
 global.bot = client;
