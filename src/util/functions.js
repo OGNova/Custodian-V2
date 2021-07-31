@@ -35,6 +35,20 @@ module.exports.loadCommand = function(client, commandPath, commandName) {
   }
 };
 
+module.exports.loadSlashCommand = function(client, slashCommandPath, slashCommandName) {
+  try {
+    const props = new(require(`${slashCommandPath}${path.sep}${slashCommandName}`))(client);
+    props.conf.location = slashCommandPath;
+    if (props.init) {
+      props.init(client);
+    }
+    client.slashcmds.set(props.help.name, props);
+    return false;
+  } catch (e) {
+    return client.logger.error(`Unable to load command ${slashCommandName}: ${e}`);
+  }
+};
+
 module.exports.unloadCommand = async function(client, commandPath, commandName) {
   let command;
   if (client.commands.has(commandName)) {

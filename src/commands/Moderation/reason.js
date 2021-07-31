@@ -35,7 +35,7 @@ class Reason extends Command {
           .setFooter(`Case ${caseNum}`);
         logMsg.edit({ embed: newLogEmbed });
 
-        await this.client.db.updateInfractionReason(caseNum, newReason);
+        this.client.db.updateInfractionReason(caseNum, newReason);
       });
     });
   }

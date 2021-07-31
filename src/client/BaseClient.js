@@ -16,6 +16,7 @@ class BaseClient extends Client {
     this.logger = require('../modules/Logger');
 
     this.commands = new Collection();
+    this.slashcmds = new Collection();
     this.aliases = new Collection();
     this.events = new Collection();
 

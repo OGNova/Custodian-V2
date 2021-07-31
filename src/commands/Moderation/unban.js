@@ -18,7 +18,7 @@ class Unban extends Command {
     if (!userID) return message.reply({ content: '\`|\`<:redTick:607067960430952459>\`|\` You must mention someone to unban them.' });
 
     const modlog = message.guild.channels.cache.find(channel =>  channel.name === 'modlog');
-    if (!modlog) return message.reply({ content: '\`|\`<:redTick:607067960430952459>\`|\` Please create a channel called **modlog** and try again.' })
+    if (!modlog) return message.reply({ content: '\`|\`<:redTick:607067960430952459>\`|\` Please create a channel called **modlog** and try again.' });
     const caseNum = await caseNumber(this.client, modlog);
 
     const reason = args.splice(1, args.length).join(' ') || `Awaiting moderator input. Use **__reason ${caseNum} <reason>**.`;
@@ -31,7 +31,7 @@ class Unban extends Command {
         .setFooter(`Case ${caseNum}`);
 
       this.client.channels.cache.get(modlog.id).send({ embeds: [ logEmbed ] });
-      await this.client.db.deactivateInfraction(caseNum, false)
+      this.client.db.deactivateInfraction(caseNum, false);
     });
   }
 }

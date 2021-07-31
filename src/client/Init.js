@@ -1,4 +1,4 @@
-const { loadCommand } = require('../util/functions');
+const { loadCommand, loadSlashCommand } = require('../util/functions');
 const permLevels = require('../modules/Permissions');
 
 const klaw = require('klaw');
@@ -17,6 +17,18 @@ const init = async function(client, token) {
     client.logger.load(`Loaded a total of ${commandList.length} commands.`);
   }).on('error', (error) => client.logger.error(error));
 
+  const slashCommandList = [];
+  klaw('./src/slash').on('data', item => {
+    const { dir, name, ext } = path.parse(item.path);
+    if (!ext || ext !== '.js') return;
+    const response = loadSlashCommand(client, dir, `${name}${ext}`);
+    slashCommandList.push(name);
+    if (response) console.log(response);
+  }).on('end', () => {
+    client.logger.load(`Loaded a total of ${slashCommandList.length} slash commands.`);
+  }).on('error', (error) => client.logger.error(error));
+
+
   const eventList = [];
   klaw('./src/events').on('data', item => {
     const { dir, name, ext } = path.parse(item.path);
@@ -34,20 +46,6 @@ const init = async function(client, token) {
     }
   }).on('end', () => {
     client.logger.load(`Loaded a total of ${eventList.length} events.`);
-  }).on('error', (error) => client.logger.error(error));
-
-  const structureList = [];
-  klaw('./src/lib/extenders').on('data', item => {
-    const { dir, name, ext } = path.parse(item.path);
-    if (!ext || ext !== '.js') return;
-    try {
-      const structure = require(`${dir}${path.sep}${name}${ext}`);
-      structureList.push(structure);
-    } catch (error) {
-      client.logger.error(`Error loading structure ${name}: ${error}`);
-    }
-  }).on('end', () => {
-    client.logger.load(`Loaded a total of ${structureList.length} structures.`);
   }).on('error', (error) => client.logger.error(error));
 
   client.levelCache = {};
