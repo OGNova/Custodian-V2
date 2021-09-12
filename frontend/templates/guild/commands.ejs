@@ -1,0 +1,31 @@
+<%- include('../blocks/header', {bot, user, path}) %>
+<h2>Command Management</h2>
+<div class="row">
+  <div class="col col-4">
+    <%- include('../blocks/guild-card', {guild}) %>
+  </div>
+  <div class="col">
+    <%- include('../blocks/guild-nav.ejs', {active: "commands", guild}) %>
+    <form method="post">
+      <% const commands = bot.commands; 
+      for (command in commands) { %>
+        <li class="list-group-item">
+          <label class="sr-only" for="<%= command %>">
+            <%= command %>
+          </label>
+          <div class="input-group mb-2 mr-sm-2 mb-sm-0" style="width: 100%; margin: 0!important;">
+              <div class="input-group-addon" style="width: 150px; text-align: right; margin: 0;">
+                <%= command %>
+              </div>
+              <input type="text" class="form-control" style="text-align: left;" name="<%= command.help.name %>" id="<%= command %>" value="<% command.conf.enabled %>" placeholder="Enter <%= command.help.name %>">
+          </div>
+        </li>
+      <% } %>
+    </form>
+  </div>
+</div>
+<%- include('../blocks/footer') %>
+<script type="text/javascript">
+  var ts = parseInt($('#guildCreate').text());
+  $('#guildCreate').html(`<strong>Created</strong> : ${moment(ts).format('MMMM Do YYYY (h:mm a)')}`);
+</script>

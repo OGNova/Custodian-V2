@@ -1,0 +1,7 @@
+{
+    "NO_DAY": "`|`<:redTick:607067960430952459>`|` Please supply an amount of days to delete messages.",
+    "INVALID_LENGTH": "`|`<:redTick:607067960430952459>`|` Please enter a number between 0 and 7.",
+    "NO_MEMBER": "`|`<:redTick:607067960430952459>`|` You must mention someone to {{action}} them.",
+    "NO_MOD_CHAN": "`|`<:redTick:607067960430952459>`|` Please create a channel called **{{chan}}** and try again.",
+    "NO_MUTE_ROLE": "`|`<:redTick:607067960430952459>`|` Please create a `{{role}}` role and try again."
+}
