@@ -7,6 +7,7 @@ if (Number(process.version.slice(1).split('.')[0]) < 16) throw new Error('Node 1
 const { Client, Collection } = require('discord.js');
 // We also load the rest of the things we need in this file:
 const { readdirSync } = require('fs');
+const { Player } = require('discord-player');
 const config = require('./config.js');
 const Enmap = require('enmap');
 const path = require('path');
@@ -296,6 +297,8 @@ client.on('disconnect', () => client.logger.warn('Bot is disconnecting...'))
   .on('error', e => client.logger.error(e))
   .on('warn', info => client.logger.warn(info));
 
+
+client.player = new Player(client);
 /* MISCELLANEOUS NON-CRITICAL FUNCTIONS */
 
 // EXTENDING NATIVE TYPES IS BAD PRACTICE. Why? Because if JavaScript adds this
