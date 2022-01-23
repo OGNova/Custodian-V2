@@ -29,11 +29,11 @@ module.exports = class Search extends Command {
     const maxTracks = res.tracks.slice(0, 10);
 
     const embed = new MessageEmbed()
-        .setColor('RED')
-        .setTitle(`Search: ${args.join(' ')}`)
-        .setDescription(`${maxTracks.map((track, i) => `**${i + 1}**. ${track.title} | ${track.author}`).join('\n')}\n\nChoose a song from **1** to **${maxTracks.length}** or say **cancel** to cancel the search.`)
-        .setTimestamp()
-        .setFooter({ });
+      .setColor('RED')
+      .setTitle(`Search: ${args.join(' ')}`)
+      .setDescription(`${maxTracks.map((track, i) => `**${i + 1}**. ${track.title} | ${track.author}`).join('\n')}\n\nChoose a song from **1** to **${maxTracks.length}** or say **cancel** to cancel the search.`)
+      .setTimestamp()
+      .setFooter('bleh');
 
     message.channel.send({ embeds: [embed] });
 
@@ -44,25 +44,25 @@ module.exports = class Search extends Command {
     });
 
     collector.on('collect', async (query) => {
-        if (query.content.toLowerCase() === 'cancel') return message.reply({ content: 'Search cancelled.' }) && collector.stop();
+      if (query.content.toLowerCase() === 'cancel') return message.reply({ content: 'Search cancelled.' }) && collector.stop();
 
-        const value = parseInt(query.content);
-        if (!value || value <= 0 || value > maxTracks.length) return message.reply({ content: `Error: select a song **1** to **${maxTracks.length}** or say **cancel** to cancel the search.`, ephemeral: true });
+      const value = parseInt(query.content);
+      if (!value || value <= 0 || value > maxTracks.length) return message.reply({ content: `Error: select a song **1** to **${maxTracks.length}** or say **cancel** to cancel the search.`, ephemeral: true });
 
-        collector.stop();
+      collector.stop();
 
-        try {
-          if (!queue.connection) await queue.connect(message.member.voice.channel);
-        } catch {
-          await player.deleteQueue(message.guild.id);
-          return message.reply({ content: 'I can\'t join your voice channel, please try again.', ephemeral: true });
-        }
+      try {
+        if (!queue.connection) await queue.connect(message.member.voice.channel);
+      } catch {
+        await player.deleteQueue(message.guild.id);
+        return message.reply({ content: 'I can\'t join your voice channel, please try again.', ephemeral: true });
+      }
 
-        const song = res.tracks[Number(query.content)-1];
-        await message.reply({ content: `Loading song: **\`${song.title}\`** 🎧`, ephemeral: true });
+      const song = res.tracks[Number(query.content)-1];
+      await message.reply({ content: `Loading song: **\`${song.title}\`** 🎧`, ephemeral: true });
 
-        queue.addTrack(song);
-        if (!queue.playing) await queue.play();
+      queue.addTrack(song);
+      if (!queue.playing) await queue.play();
     });
 
     collector.on('end', (message, reason) => {
